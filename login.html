@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - Morse Verse</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/space-mono/1.0.0/web/space-mono.css">
+  <style>
+    body {
+      font-family: 'Space Mono', monospace;
+      margin: 0;
+      padding: 0;
+      background: #0f172a;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .grid-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        linear-gradient(to right, rgba(30, 41, 59, 0.3) 1px, transparent 1px) 0 0 / 50px 50px,
+        linear-gradient(to bottom, rgba(30, 41, 59, 0.3) 1px, transparent 1px) 0 0 / 50px 50px;
+      z-index: 0;
+    }
+
+    .glow {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 600px;
+      height: 600px;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, transparent 70%);
+      z-index: 1;
+    }
+
+    .login-container {
+      position: relative;
+      z-index: 2;
+      background: rgba(15, 23, 42, 0.7);
+      padding: 40px;
+      border-radius: 20px;
+      border: 1px solid rgba(56, 189, 248, 0.1);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 40px rgba(56, 189, 248, 0.1);
+      width: 350px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #e2e8f0;
+      letter-spacing: 2px;
+    }
+
+    p {
+      color: #94a3b8;
+      font-size: 0.9em;
+      margin-bottom: 30px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      background: rgba(30, 41, 59, 0.5);
+      color: #e2e8f0;
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: rgba(56, 189, 248, 0.5);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: rgba(56, 189, 248, 0.2);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #38bdf8;
+      border-radius: 8px;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 1px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: rgba(56, 189, 248, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(56, 189, 248, 0.2);
+    }
+
+    .error {
+      color: #f87171;
+      font-size: 0.8em;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-background"></div>
+  <div class="glow"></div>
+
+  <div class="login-container">
+    <h2>Morse Verse</h2>
+    <p>Login to continue</p>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
+    <p class="error" id="errorMessage"></p>
+  </div>
+
+  <script>
+    function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const error = document.getElementById("errorMessage");
+
+      if (username === "admin" && password === "1234") {
+        localStorage.setItem("loggedIn", "true");
+        window.location.href = "index.html";
+      } else {
+        error.textContent = "Invalid username or password.";
+      }
+    }
+  </script>
+</body>
+</html>
