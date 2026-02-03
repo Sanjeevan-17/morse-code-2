@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morse Code Converter</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        input {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .output-box {
+            margin-top: 30px;
+            font-size: 20px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🔤 Morse Code Converter</h1>
+
+    <!-- Flask Form -->
+    <form method="POST">
+        <input type="text" name="text" placeholder="Enter text here..." required>
+        <button type="submit">Convert</button>
+    </form>
+
+    <!-- Output Section -->
+    {% if output %}
+    <div class="output-box">
+        <h2>Output Morse Code:</h2>
+        <p>{{ output }}</p>
+    </div>
+    {% endif %}
+
+</body>
+</html>

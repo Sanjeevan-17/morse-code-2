@@ -1,0 +1,15 @@
+plugin{
+    agent any
+    environment{
+        DockerHub_Credentials = credientials('')
+        Image_Name ='sanjeevan/morse-code-app'
+
+    }
+    stages{
+        stage('Checkout Code'){
+            steps{
+                git ''
+            }
+        }
+    }
+}
