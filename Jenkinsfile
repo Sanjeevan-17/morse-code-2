@@ -10,7 +10,8 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/Sanjeevan-17/morse-code-2.git'
+                git branch: 'main',
+                    url: 'https://github.com/Sanjeevan-17/morse-code-2.git'
             }
         }
 
@@ -29,7 +30,10 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t $Image_Name:$BUILD_NUMBER ."
+                sh """
+                docker build -t $Image_Name:latest .
+                docker tag $Image_Name:latest $Image_Name:$BUILD_NUMBER
+                """
             }
         }
 
@@ -37,6 +41,8 @@ pipeline {
             steps {
                 sh """
                 echo \$DockerHub_Credentials_PSW | docker login -u \$DockerHub_Credentials_USR --password-stdin
+
+                docker push $Image_Name:latest
                 docker push $Image_Name:$BUILD_NUMBER
                 """
             }
@@ -44,18 +50,23 @@ pipeline {
 
         stage('Deploy Stage') {
             steps {
-                sh "docker run -d -p 8080:8080 $Image_Name:$BUILD_NUMBER"
+                sh """
+                docker stop morse-container || true
+                docker rm morse-container || true
+
+                docker run -d --name morse-container -p 8080:8080 $Image_Name:latest
+                """
             }
         }
     }
 
     post {
         success {
-            echo 'Build, Test, Deploy completed successfully!'
+            echo '✅ Build, Test, Push, Deploy completed successfully!'
         }
 
         failure {
-            echo 'Pipeline failed. Check logs.'
+            echo '❌ Pipeline failed. Check logs.'
         }
     }
 }
