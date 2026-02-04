@@ -10,7 +10,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/Sanjeevan-17/morse-code-1.git'
+                git 'https://github.com/Sanjeevan-17/morse-code-2.git'
             }
         }
 
