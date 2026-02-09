@@ -19,8 +19,8 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'pip install flake8'
-                sh 'flake8 . || true'
+                sh ''pip install flake8
+                 flake8 . || true''
             }
         }
 
