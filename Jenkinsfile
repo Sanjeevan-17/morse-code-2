@@ -49,7 +49,7 @@ pipeline {
                 docker kill morse-container || true
                 docker rm morse-container || true
                 docker system prune -f
-                docker run -d --name morse-container -p 8080:5000 $Image_Name:latest
+                docker run -d --name morse-container -p 8090:5000 $Image_Name:latest
                 """
             }
         }
