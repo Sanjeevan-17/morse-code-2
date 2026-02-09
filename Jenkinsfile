@@ -14,7 +14,7 @@ pipeline {
                     url: 'https://github.com/Sanjeevan-17/morse-code-2.git'
             }
         }
-        
+
         stage('Run Tests') {
             steps {
                 sh '''
@@ -33,13 +33,10 @@ pipeline {
             }
         }
 
-
-
         stage('Push to Docker Hub') {
             steps {
                 sh """
                 echo \$DockerHub_Credentials_PSW | docker login -u \$DockerHub_Credentials_USR --password-stdin
-
                 docker push $Image_Name:latest
                 docker push $Image_Name:$BUILD_NUMBER
                 """
@@ -51,12 +48,11 @@ pipeline {
                 sh """
                 docker stop morse-container || true
                 docker rm morse-container || true
-        
                 docker run -d --name morse-container -p 8080:5000 $Image_Name:latest
                 """
             }
         }
-
+    }
 
     post {
         success {
