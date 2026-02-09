@@ -14,6 +14,15 @@ pipeline {
                     url: 'https://github.com/Sanjeevan-17/morse-code-2.git'
             }
         }
+        
+        stage('Run Tests') {
+            steps {
+                sh '''
+                docker build -t test-image .
+                docker run test-image pytest || true
+                '''
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
@@ -23,14 +32,7 @@ pipeline {
                 """
             }
         }
-        stage('Run Tests') {
-            steps {
-                sh '''
-                docker build -t test-image .
-                docker run test-image pytest || true
-                '''
-            }
-        }
+
 
 
         stage('Push to Docker Hub') {
