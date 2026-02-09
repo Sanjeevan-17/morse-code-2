@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DockerHub_Credentials = credentials('sanju1701')
-        Image_Name = "sanjeevan/morse-code-app"
+        Image_Name = "sanju1701/morse-code-app"
     }
 
     stages {
@@ -49,12 +49,12 @@ pipeline {
                 sh """
                 docker stop morse-container || true
                 docker rm morse-container || true
-
-                docker run -d --name morse-container -p 8080:8080 $Image_Name:latest
+        
+                docker run -d --name morse-container -p 8080:5000 $Image_Name:latest
                 """
             }
         }
-    }
+
 
     post {
         success {
