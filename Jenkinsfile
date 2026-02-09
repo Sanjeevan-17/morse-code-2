@@ -19,10 +19,17 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh ''pip install flake8
-                 flake8 . || true''
+                    sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install -r requirements.txt
+                    pip install pytest flake8
+                    pytest || true
+                    flake8 . || true
+                    '''
             }
         }
+
 
         stage('Build Docker Image') {
             steps {
