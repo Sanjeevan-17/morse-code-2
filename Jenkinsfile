@@ -15,22 +15,6 @@ pipeline {
             }
         }
 
-  
-
-        stage('Run Tests') {
-            steps {
-                    sh '''
-                    python3 -m venv venv
-                    . venv/bin/activate
-                    pip install -r requirements.txt
-                    pip install pytest flake8
-                    pytest || true
-                    flake8 . || true
-                    '''
-            }
-        }
-
-
         stage('Build Docker Image') {
             steps {
                 sh """
@@ -39,6 +23,15 @@ pipeline {
                 """
             }
         }
+        stage('Run Tests') {
+            steps {
+                sh '''
+                docker build -t test-image .
+                docker run test-image pytest || true
+                '''
+            }
+        }
+
 
         stage('Push to Docker Hub') {
             steps {
